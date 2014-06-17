@@ -1,0 +1,36 @@
+class ispconfig_iptables {
+
+  class {'iptables':
+    safe_ssh    => false,
+    log         => 'none',
+    disableboot => true
+  }
+
+######## SOLO DA RETI SOFTEC ################
+$from_softec_ports = {  'ssh'       => { port => '22'},
+                        'ispconfig' => { port => '81'},
+                        'ftp'       => { port => '21'},
+                        'ftp-passv' => { port => '49100:50000'}
+                     }
+create_resources ('iptables::rule',$from_softec_ports,{'source' => split($::subnet_softec,' ')})
+
+######### SOLO DA PARTICOLARI HOST ##########
+iptables::rule {'contalo_logs':
+  source  => '77.238.6.23',
+  port    => '8089'
+}
+$from_nagios_ports =  { 'nagios_ssh'        => { port => '22'},
+                        'nagios_nrpe'       => { port => '5666'},
+                        'nagios_ispconfig'  => { port => '81'},
+                        'nagios_ftp'        => { port => '21'},
+                      }
+create_resources('iptables::rule',$from_nagios_ports, {'source' => $::nagios_ip})
+
+######### AL MONDO ##########################
+$from_world_ports = { 'http'  => {'port' => '80'},
+                      'https' => {'port' => '443'},
+                      'smtp'  => {'port' => '25'},
+                    }
+create_resources('iptables::rule',$from_world_ports)
+
+}
