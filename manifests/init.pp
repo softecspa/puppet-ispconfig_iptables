@@ -1,9 +1,11 @@
-class ispconfig_iptables {
+class ispconfig_iptables (
+  $disableboot  = false
+){
 
   class {'iptables':
     safe_ssh    => false,
     log         => 'none',
-    disableboot => true
+    disableboot => $disableboot
   }
 
 ######## SOLO DA RETI SOFTEC ################
