@@ -16,6 +16,13 @@ $from_softec_ports = {  'ssh'       => { port => '22'},
                      }
 create_resources ('iptables::rule',$from_softec_ports,{'source' => split($::subnet_softec,' ')})
 
+#01/07/2014 asagratini #1655, acl per backuppc/barattolo
+######## ACL DA VLAN115 PER BACKUP #########
+$from_bologna_vlan115 = { 'backuppc_ssh'     => { port => '22'},
+                          'barattolo_mysql'  => { port => '3306'}
+                        }
+create_resources ('iptables::rule',$from_bologna_vlan115,{'source' => '77.238.6.144/28'})
+
 ######### SOLO DA PARTICOLARI HOST ##########
 iptables::rule {'contalo_logs':
   source  => '77.238.6.23',
