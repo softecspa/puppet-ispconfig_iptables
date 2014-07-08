@@ -47,6 +47,6 @@ $from_world_ports = { 'http'  => {'port' => '80'},
                       'https' => {'port' => '443'},
                       'smtp'  => {'port' => '25'},
                     }
-create_resources('iptables::rule',$from_world_ports)
+create_resources('iptables::rule',$from_world_ports,{'enable_v6' => $enable_v6})
 
 }
