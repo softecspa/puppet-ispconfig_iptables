@@ -1,11 +1,13 @@
 class ispconfig_iptables (
-  $disableboot  = false
+  $disableboot  = false,
+  $enable_v6    = false,
 ){
 
   class {'iptables':
     safe_ssh    => false,
     log         => 'none',
-    disableboot => $disableboot
+    disableboot => $disableboot,
+    enable_v6   => $enable_v6
   }
 
 ######## SOLO DA RETI SOFTEC ################
