@@ -35,9 +35,7 @@ $from_nagios_ports =  { 'nagios_ssh'        => { port => '22'},
                         'nagios_ispconfig'  => { port => '81'},
                         'nagios_ftp'        => { port => '21'},
                         'nagios_imap'       => { port => '143'},
-                        'nagios_imaps'      => { port => '993'},
                         'nagios_pop'        => { port => '110'},
-                        'nagios_pops'       => { port => '995'},
 
                       }
 create_resources('iptables::rule',$from_nagios_ports, {'source' => $::nagios_ip})
