@@ -46,6 +46,8 @@ create_resources('iptables::rule',$from_nagios_ports, {'source' => $::nagios_ip}
 $from_world_ports = { 'http'  => {'port' => '80'},
                       'https' => {'port' => '443'},
                       'smtp'  => {'port' => '25'},
+                      'imaps' => {'port' => '993'},
+                      'pops'  => {'port' => '995'},
                     }
 create_resources('iptables::rule',$from_world_ports,{'enable_v6' => $enable_v6})
 
