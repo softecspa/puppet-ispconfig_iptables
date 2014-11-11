@@ -1,6 +1,8 @@
 class ispconfig_iptables (
-  $disableboot  = false,
-  $enable_v6    = false,
+  $disableboot    = false,
+  $enable_v6      = false,
+  $subnet_softec  = $::subnet_softec_array,
+  $nagios_ip      = $::nagios_ip,
 ){
 
   class {'iptables':
@@ -16,7 +18,7 @@ $from_softec_ports = {  'ssh'       => { port => '22'},
                         'ftp'       => { port => '21'},
                         'ftp-passv' => { port => '49100:50000'}
                      }
-create_resources ('iptables::rule',$from_softec_ports,{'source' => split($::subnet_softec,' ')})
+create_resources ('iptables::rule',$from_softec_ports,{'source' => $subnet_softec})
 
 #01/07/2014 asagratini #1655, acl per backuppc/barattolo
 ######## ACL DA VLAN115 PER BACKUP #########
@@ -38,7 +40,7 @@ $from_nagios_ports =  { 'nagios_ssh'        => { port => '22'},
                         'nagios_pop'        => { port => '110'},
 
                       }
-create_resources('iptables::rule',$from_nagios_ports, {'source' => $::nagios_ip})
+create_resources('iptables::rule',$from_nagios_ports, {'source' => $nagios_ip})
 
 ######### AL MONDO ##########################
 $from_world_ports = { 'http'  => {'port' => '80'},
